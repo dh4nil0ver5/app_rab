@@ -1,0 +1,23 @@
+
+            <div class="col-md-6" style="margin-bottom: 10px;">
+              <label for="master_pekerjaan">Nama material</label>
+            </div>
+            <div class="col-md-6" style="margin-bottom: 10px;">
+              <textarea class="form-control form-input" id="name_raw"></textarea>
+            </div>
+            <div class="col-md-6" style="margin-bottom: 10px;">
+              <label for="master_pekerjaan">Qty</label>
+            </div>
+            <div class="col-md-6" style="margin-bottom: 10px;">
+              <input type="number" class="form-control form-input" id="qty" />
+            </div>
+            <div class="col-md-6" style="margin-bottom: 10px;">
+              <label for="master_pekerjaan">UOM</label>
+            </div>
+            <div class="col-md-6" style="margin-bottom: 10px;">
+              <select name="" id="id_item" class="form-control">
+                @foreach($tdmasterkoefisien as $cat)   
+                <option value="{{$cat->code_koef}}">{{ $cat->name_koefisien }}</option> 
+                @endforeach 
+              </select>
+            </div>
