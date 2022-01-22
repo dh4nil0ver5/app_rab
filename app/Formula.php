@@ -13,9 +13,17 @@ class Formula extends Model
         if ($id==null) {
             $q="where a.status=1";
         } else {
-            $q=" where a.id_raw=".$id;    
+            $q=" where a.id_analisa=".$id;    
         }
-        $kota = DB::table('tb_domisili_kabkot')->get(); 
+        $kota = DB::table('tb_domisili_kabkot')->get();
+        // echo "SELECT 
+        // a.`id_analisa` AS `id_analisa`,
+        // b.name_ofitem AS `name_ofitem`,
+        // c.`name_ofcategory` AS `category`,
+        // a.`percen_margin` AS `percen_margin`
+        // FROM `tdformula` a
+        // JOIN `tditemwork` b ON a.`id_item`=b.`id_item`
+        // JOIN tdcategoryformula c ON a.`id_categoryformula`=c.`id_category` ";
         $data = DB::select("SELECT 
         a.`id_analisa` AS `id_analisa`,
         b.name_ofitem AS `name_ofitem`,

@@ -81,7 +81,7 @@ data-toggle="modal" data-target="#newFormula">
             </div>
             <div class="col-md-6" style="margin-bottom: 10px;">
               <select name="" id="tdkindofraw" class="form-control" kode="">
-                <option value="0">-- material yang digunakan --</option> 
+                <option value="0"> -- material yang digunakan --</option> 
                 @foreach($tdkindofraw as $cat)   
                 <option value="{{$cat->id_kindofraw}}">{{ $cat->name_of_kind }}</option> 
                 @endforeach 

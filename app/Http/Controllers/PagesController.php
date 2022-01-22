@@ -68,12 +68,19 @@ class PagesController extends Controller
         $tditemwork = DB::table('tditemwork')->where('status',1)->get();
         $category = DB::table('tdcategoryformula')->where('status',1)->get();
         $tb_domisili_kabkot = DB::table('tb_domisili_kabkot')->get();  
+        
         return view('pages.formula')->with(compact('data', 'session', 'tdkindofraw', 
         'tdmasterkoefisien','tb_domisili_kabkot', 'category', 'tditemwork'));
     }
     public function rab($offset=null, $lim=null){ 
         $session = array("status"=>200,'pesan'=>'');  
-        return view('pages.rab')->with(compact('session'));
+        $name_project = DB::table('tdnameproject')->where('status',1)->get();
+        $tdmasterwork = DB::table('tdmasterwork')->where('status',1)->get();
+        $tdpointofwork = DB::table('tdpointofwork')->where('status',1)->get();
+        $tdactivitywork = DB::table('tdactivitywork')->where('status',1)->get();
+        $tditemwork = DB::table('tditemwork')->where('status',1)->get();
+        return view('pages.rab')->with(compact('session', 'name_project', 'tdmasterwork', 
+            'tdpointofwork','tdactivitywork','tditemwork'));
     }
     public function project (){ 
         $session = array("menu"=>"menu-is-opening menu-open","menu_open"=>"style='display: block;'");  

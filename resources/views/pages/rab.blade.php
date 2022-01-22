@@ -42,7 +42,7 @@
         </div>
         <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" 
           aria-labelledby="custom-tabs-one-profile-tab"> 
-          <button type="button" class="btn btn-flat btn-primary" data-toggle="modal" data-target="#newProject" 
+          <button type="button" class="btn btn-flat btn-primary" data-toggle="modal" data-target="#newRab" 
             style="margin-top: 10px; margin-bottom: 10px;">
             <i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah
                 </button>
@@ -168,14 +168,14 @@
               <label for="master_pekerjaan">Nama project</label>
             </div>
             <div class="col-md-6" style="margin-bottorm: 10px;">
-              <input type="text" class="form-control form-input" name="up_id_project" id="name_project" />
+              <input type="text" class="form-control form-input" name="up_id_project" id="name_project" hidden/>
               <input type="text" class="form-control form-input" name="up_name_project" id="name_project" />
             </div> 
             <div class="col-md-6" style="margin-bottom: 10px;">
               <label for="master_pekerjaan">Pekerjaan</label>
             </div>
             <div class="col-md-6" style="margin-bottorm: 10px;">
-              <input type="date" class="form-control form-input" name="up_work_project" id="pekerjaan" />
+              <input type="text" class="form-control form-input" name="up_work_project" id="pekerjaan" />
             </div> 
             <div class="col-md-6" style="margin-bottom: 10px;">
               <label for="master_pekerjaan">Lokasi</label>
@@ -219,6 +219,86 @@
         <input type="submit" class="btn btn-primary"id="saveProject" value='Save changes' />
       </div>
       </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="newRab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">new Rab</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;"><label for="kode_project">Kode project</label></div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;">
+            <select name="" id="tdkindofraw" class="form-control" kode="">
+              <option value="0">-- project --</option> 
+              @foreach($name_project as $cat)   
+              <option value="{{$cat->id_project}}">{{ $cat->name_project }}</option> 
+              @endforeach 
+            </select>
+          </div> 
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;"><label for="kode_project">Kode pekerjaan</label></div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;">
+            <select name="" id="tdkindofraw" class="form-control" kode="">
+              <option value="0">-- pekerjaan --</option> 
+              @foreach($tdmasterwork as $cat)   
+              <option value="{{$cat->id_work}}">{{ $cat->name_work }}</option> 
+              @endforeach 
+            </select>
+          </div> 
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;"><label for="kode_project">Kode sub pekerjaan</label></div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;">
+            <select name="" id="tdkindofraw" class="form-control" kode="">
+              <option value="0">-- sub pekerjaan --</option> 
+              @foreach($tdpointofwork as $cat)   
+              <option value="{{$cat->id_work}}">{{ $cat->name_ofpointwork }}</option> 
+              @endforeach 
+            </select>
+          </div> 
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;"><label for="kode_project">Kode spesifikasi </label></div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;">
+            <input type="text" class="text form-control form-input" />
+          </div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;"><label for="kode_project">Kode panjang </label></div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;">
+            <input type="number" class="text form-control form-input" />
+          </div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;"><label for="kode_project">Kode lebar </label></div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;">
+            <input type="number" class="text form-control form-input" />
+          </div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;"><label for="kode_project">Kode tinggi </label></div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;">
+            <input type="number" class="text form-control form-input" />
+          </div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;"><label for="kode_project">Kode unit </label></div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;">
+            <input type="number" class="text form-control form-input" />
+          </div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;"><label for="kode_project">Kode volume </label></div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;">
+            <input type="number" class="text form-control form-input" />
+          </div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;"><label for="kode_project">Kode satuan </label></div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;">
+            <input type="text" class="text form-control form-input" />
+          </div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;"><label for="kode_project">Kode HSP </label></div>
+          <div class="col-md-6" style="margin-top: 5px; margin-bottom: 5px;">
+            <input type="text" class="text form-control form-input" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-xs btn-flat">
+          <i class="fas fa-save"></i> Save
+        </button>
+      </div>
     </div>
   </div>
 </div>
