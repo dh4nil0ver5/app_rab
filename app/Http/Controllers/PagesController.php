@@ -78,9 +78,21 @@ class PagesController extends Controller
         $tdmasterwork = DB::table('tdmasterwork')->where('status',1)->get();
         $tdpointofwork = DB::table('tdpointofwork')->where('status',1)->get();
         $tdactivitywork = DB::table('tdactivitywork')->where('status',1)->get();
-        $tditemwork = DB::table('tditemwork')->where('status',1)->get();
+        $tditemwork = DB::table('tdformula') 
+        ->join('tditemwork', 'tditemwork.id_item', '=','tdformula.id_item')
+        ->select(
+            "tditemwork.id_item as id_item",
+            "tditemwork.name_ofitem as name_ofitem",
+            "tdformula.id_analisa as id_analisa",
+            "tdformula.hsp as hsp"
+            )
+            ->where('tdformula.status',1)->get(); 
+        $tdformula = DB::table('tdformula')->where('status',1)->get();
+        $tdactivitywork = DB::table('tdactivitywork')->where('status',1)->get();
+        $tdmasterkoefisien = DB::table('tdmasterkoefisien')->get();
         return view('pages.rab')->with(compact('session', 'name_project', 'tdmasterwork', 
-            'tdpointofwork','tdactivitywork','tditemwork'));
+            'tdpointofwork','tdactivitywork','tditemwork', 'tdformula', 'tdactivitywork',
+            'tdmasterkoefisien'));
     }
     public function project (){ 
         $session = array("menu"=>"menu-is-opening menu-open","menu_open"=>"style='display: block;'");  

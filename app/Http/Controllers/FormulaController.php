@@ -40,6 +40,8 @@ class FormulaController extends Controller
         $id = $request->input('id_analisa');
         $data = [ 
             'percen_margin'=>$request->input('percen_margin'),
+            'total_price'=>$request->input('total_price'),
+            'hsp'=>$request->input('hsp'),
         ];   
         return Formula::update_margin($data, $id);
     } 

@@ -180,6 +180,8 @@
       data: {
         id_analisa: $("#val_idanalisa").attr('kode'),
         percen_margin: $("#percen_margin_up").val(),
+        total_price: $("#res_sum").text(),
+        hsp: $("#result").text(),
       },
       dataType: "json",
       success: function (json) {
@@ -392,8 +394,25 @@
               res = harga*(pc/100);
               $("#margin").text(res);
               $("#res_sum").text(dump_val.reduce((a, b) => a + b, 0));
-              $("#result").text(harga+res);
-              console.log(res);
+              $("#result").text(harga+res); 
+              $.post({
+                type: "post",
+                url: "<?php echo url('update/margin'); ?>",
+                data: {
+                  id_analisa: $("#asub"+param).attr('kode'),
+                  percen_margin: $("#percen_margin_up").val(),
+                  total_price: $("#res_sum").text(),
+                  hsp: $("#result").text(),
+                },
+                dataType: "json",
+                success: function (json) {
+                  if (parseInt(json['status']) == 200) {   
+                    loaddata();
+                    $("#margin").removeAttr('hidden');
+                    $("#upMargin").attr('hidden','');
+                  } 
+                }
+              });
             }else{
               return_data;
             }
@@ -407,8 +426,7 @@
           { data: 'price'},  
           // { data: 'aksi'},  
         ]
-    });
-    console.log($("#a*"));
+    }); 
     $("#DetailFormula").modal('toggle'); 
   }
   function hapus(param){ 

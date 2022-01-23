@@ -177,6 +177,135 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>  
+  $("#id_formula").change(function(e) {  
+    $("#txtHsp").val($('#id_formula option:selected').attr('hsp'));
+  });
+  $("#txtVolume")
+  .focus(function(e){
+    a = $("#txtPanjang").val();
+    b = $("#txtLebar").val();
+    c = $("#txtTinggi").val();
+    d = $("#txtUnit").val();
+    res = a*b*c*d;
+    $("#txtVolume").val(res);
+  })
+  .change(function(e) {  
+    a = $("#txtVolume").val();
+    b = $("#txtHsp").val();
+    res = a*b;
+    $("#txtVolume").val(res);
+  });
+  $("#txtTotal")
+  .focus(function(e){
+    a = $("#txtVolume").val();
+    b = $("#txtHsp").val();
+    res = a*b;
+    $("#txtTotal").val(res);
+  })
+  .change(function(e) {  
+    a = $("#txtPanjang").val();
+    b = $("#txtLebar").val();
+    c = $("#txtTinggi").val();
+    d = $("#txtUnit").val();
+    res = a*b*c*d;
+    $("#txtTotal").val(res);
+  });
+  $("#saveActivity").click(function(e){
+    $.post({
+      url: "<?php echo url('/'); ?>/save/activity",  
+      data: {
+        nama_activity: $("#nama_activity").val(),
+      },
+      dataType: 'json',
+      success: function (json) { 
+        if (parseInt(json['status']) == 200) {   
+          $("#newActivity").modal('toggle');
+          Swal.fire('sukses !');
+          loadactivity();
+        } else { 
+          $("#newActivity").modal('toggle');
+          loadactivity();
+          Swal.fire('error !');
+        } 
+      }
+    });
+  });
+  $("#saveUpActivity").click(function(e){
+    $.post({
+      url: "<?php echo url('/'); ?>/ubah/activity",  
+      data: {
+        id_activitywork: $("#upid_activitywork").val(),
+        nama_activity: $("#upnama_activity").val(),
+      },
+      dataType: 'json',
+      success: function (json) { 
+        if (parseInt(json['status']) == 200) {   
+          $("#updateActivity").modal('toggle');
+          Swal.fire('sukses !');
+          loadactivity();
+        } else { 
+          $("#updateActivity").modal('toggle');
+          loadactivity();
+          Swal.fire('error !');
+        } 
+      }
+    });
+  });
+  $("#btnSave").click(function(e) {
+    $.post({
+      url: "<?php echo url('/'); ?>/save/rab",  
+      data: {
+        id_project: $("#kode_project option:selected").val(),
+        id_work: $("#kode_pekerjaan option:selected").val(), 
+        id_pointofwork: $("#sub_pekerjaan option:selected").attr("id_pointofwork"),
+        id_analisis: $("#id_formula option:selected").val(),
+        id_itemwork: $("#id_formula option:selected").attr("id_item"),
+        id_activitywork: $("#id_aktifitas option:selected").val(),
+        spesifikasi: $("#spesifikasi").val(),
+        panjang: $("#txtPanjang").val(),
+        lebar: $("#txtLebar").val(),
+        tinggi: $("#txtTinggi").val(),
+        unit: $("#txtUnit").val(),
+        volume: $("#txtVolume").val(),
+        txtIdx: $("#txtIdx").val(),
+        satuan: $("#txtSatuan option:selected").val(),
+        hsp: $("#txtHsp").val(),
+        total: $("#txtTotal").val(),
+      },
+      dataType: 'json',
+      success: function (json) { 
+        if (parseInt(json['status']) == 200) {   
+          $("#newRab").modal('toggle');
+          Swal.fire('sukses !');
+          loadproject(); 
+          $('#kode_project').prop('selectedIndex', 0);
+          $('#kode_pekerjaan').prop('selectedIndex', 0);
+          $('#sub_pekerjaan').prop('selectedIndex', 0);
+          $('#id_formula').prop('selectedIndex', 0);
+          $('#id_aktifitas').prop('selectedIndex', 0);
+          $("#spesifikasi").val("");
+          $("#txtPanjang").val("");
+          $("#txtLebar").val("");
+          $("#txtTinggi").val("");
+          $("#txtUnit").val("");
+          $("#txtVolume").val("");
+          $("#txtIdx").val("");
+          $('#txtSatuan').prop('selectedIndex', 0); 
+          $("#txtHsp").val("");
+          $("#txtTotal").val("");
+          loadproject();
+          loadactivity();
+          loadrab();
+        } else { 
+          $("#newRab").modal('toggle');
+          Swal.fire('error !');
+          loadproject();
+          loadactivity();
+          loadrab();
+        } 
+      }
+    });
+  });
   function check(param){   
     $.get({
       url: 'data/project/'+$("#sub"+param+"").attr("kode"),  
@@ -185,14 +314,12 @@
         if (parseInt(json['status']) == 200) { 
               $.each(json['data'], function (i, item) { 
                 $("input[name='up_id_project']").val(item.id_project);
-                $("input[name='up_name_project']").val(item.name_project);
-                $("input[name='up_work_project']").val(item.work_project);
-                $("input[name='up_revisi']").val(item.revisi);
-                $("input[name='up_location']").val(item.location);
-                $("input[name='up_lokasi_file']").val(item.lokasi_file);
-                $("input[name='up_no_rab']").val(item.no_rab);
+                $("input[name='up_name_project']").val(item.name_project); 
+                $("input[name='up_work_project']").val(item.work_project); 
+                $("input[name='up_location']").val(item.location); 
                 $("input[name='up_code_picture']").val(item.code_picture); 
-                $("input[name='up_nama_file']").val(item.nama_picture); 
+                $("input[name='up_no_rab']").val(item.no_rab); 
+                $("input[name='up_lokasi_file']").val(item.lokasi_file); 
               }); 
           $("#updateProject").modal('toggle'); 
         } else {
@@ -215,6 +342,39 @@
           loadproject();
         } else { 
           loadproject();
+          Swal.fire('error !');
+        } 
+      }
+    });
+  }
+  function check_activity(param){   
+    $.get({
+      url: 'data/activity/'+$("#sub"+param+"").attr("kode"),  
+      dataType: 'json',
+      success: function (json) { 
+        if (parseInt(json['status']) == 200) { 
+              $.each(json['data'], function (i, item) { 
+                $("input[id='upid_activitywork']").val(item.id_activitywork);
+                $("input[id='upnama_activity']").val(item.name_activity); 
+              }); 
+          $("#updateActivity").modal('toggle'); 
+        } else {
+          $("#updateActivity").modal('toggle');
+          Swal.fire('error !');
+        } 
+      }
+    });
+  }
+  function hapus_activity(param){ 
+    $.get({
+      url: "hapus/activity/"+param,  
+      dataType: 'json',
+      success: function (json) { 
+        if (parseInt(json['status']) == 200) {   
+          Swal.fire('sukses !');
+          loadactivity();
+        } else { 
+          loadactivity();
           Swal.fire('error !');
         } 
       }
@@ -268,10 +428,106 @@
         ]
       });
   } 
-  function loaddata(){  
+  function loadactivity(){ 
+    $("#list_activity").DataTable().destroy();
+    $("#list_activity").DataTable({
+        processing: true,
+        serverSide: false, 
+        bLengthChange: false,
+        bPaginate: true,
+        bFilter: false,
+        bInfo: false,
+        ajax: {
+          url: "<?php echo url('data/activity'); ?>",
+          type: "get",
+          dataSrc: function (json) {
+            var return_data = new Array();
+		        if (parseInt(json['status']) == 200) {  
+              $.each(json['data'], function (i, item) { 
+	                return_data.push({
+                    'no':(i+1), 
+                    'name_picture':item.name_activity, 
+                    'aksi':
+                    "<div class='btn btn-xs btn-warning btn-flat' kode='"+item.id_activitywork+"' id='sub"+i+"' onclick='check_activity("+item.id_activitywork+")'>edit</div>"+
+                    "<div class='btn btn-xs btn-danger btn-flat' kode='"+item.id_activitywork+"' id='sub"+i+"' onclick='hapus_activity("+item.id_activitywork+")'>hapus</div>" 
+                  });
+              });
+            }else{
+              return_data;
+            }
+            return return_data;
+          } 
+        },columns: [
+          { data: 'no'},  
+          { data: 'name_picture'},
+          { data: 'aksi'}, 
+        ]
+      }); 
+  }
+  function check_rab(param){ }
+  function hapus_rab(param){ }
+  function loadrab(){ 
+    $("#list_rab").DataTable().destroy();
+    $("#list_rab").DataTable({
+        processing: true,
+        serverSide: false, 
+        bLengthChange: false,
+        bPaginate: true,
+        bFilter: false,
+        bInfo: false,
+        ajax: {
+          url: "<?php echo url('data/rab'); ?>",
+          type: "get",
+          dataType: 'json',
+          dataSrc: function (json) {
+            var counts = {};
+            var return_data = new Array();
+		        if (parseInt(json['status']) == 200) {  
+              var a = json['data'].forEach(function(x) { counts[x] = (counts[x] || 0)+1; });
+              console.log(a);
+              $.each(json['data'], function (i, item) { 
+                obj = json['data'][i];
+                if (Object.values(obj).indexOf(json['data'][i].name_ofpointwork) > 1) {
+                  console.log(1);
+                } else {
+                  console.log(2);
+                }
+	                return_data.push({
+                    'no':(i+1),  
+                    'name_project':item.name_project, 
+                    'name_work':item.name_work, 
+                    'name_ofitem':item.name_ofpointwork, 
+                    'name_activity':item.name_activity, 
+                    'name_ofpointwork':item.name_ofitem, 
+                    'idx':item.idx, 
+                    'aksi':
+                    "<div class='btn btn-xs btn-warning btn-flat' idrab='"+item.id_rabplan+"' kode='"+item.id_pointofwork
+                      +"' id='sub"+i+"' onclick='check_rab("+item.id_activitywork+")'>edit</div>"+
+                    "<div class='btn btn-xs btn-danger btn-flat' idrab='"+item.id_rabplan+"' kode='"+item.id_pointofwork
+                      +"' id='sub"+i+"' onclick='hapus_rab("+item.id_activitywork+")'>hapus</div>" 
+                  });
+              });
+            }else{
+              return_data;
+            }
+            return return_data;
+          } 
+        },columns: [
+          { data: 'no'},   
+          { data: 'name_project'},
+          { data: 'name_work'},
+          { data: 'name_ofitem'},
+          { data: 'name_activity'},
+          { data: 'name_ofpointwork'},
+          { data: 'idx'}, 
+          { data: 'aksi'}, 
+        ]
+      }); 
   }
   $(document).ready(function() {
     loadproject();
+    loadactivity();
+    loadrab();
   });
 </script>
 </body>

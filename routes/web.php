@@ -58,4 +58,14 @@ Route::post('delete/project', 'ProjectController@deleteByIdProject')->name("dele
 Route::get('data/project', 'ProjectController@data_project')->name('data_projectpekerjaan');
 Route::get('data/project/{id}', 'ProjectController@data_project')->name("dataByIdPekerjaan");
 // 
-Route::get('data/rab/pekerjaan', 'RabController@data_rab');
+Route::post('save/rab', 'RabController@save_rab')->name("save_rab");
+Route::post('ubah/rab', 'RabController@ubah_rab')->name("ubah_rab");  
+Route::get('data/rab', 'RabController@data_rab');
+Route::get('data/rab/{id}', 'RabController@data_rab')->name("data_rab");
+Route::get('data/rab/{id}/hapus', 'RabController@data_rab_hapus')->name("data_rab_hapus");
+// 
+Route::post('save/activity', 'ActivityController@save_activity')->name("save_activity");
+Route::post('ubah/activity', 'ActivityController@ubah_activity')->name("ubah_activity");
+Route::get('data/activity', 'ActivityController@data_activity')->name("data_activity");
+Route::get('data/activity/{id}', 'ActivityController@data_activity')->name("data_activity");
+Route::get('hapus/activity/{id}', 'ActivityController@hapus_activity')->name("hapus_activity");

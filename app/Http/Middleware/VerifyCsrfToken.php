@@ -48,6 +48,12 @@ class VerifyCsrfToken extends Middleware
         //
         'save/project',
         'ubah/project',
-        'delete/project'
+        'delete/project',
+        // 
+        'save/rab',
+        'ubah/rab', 
+        // 
+        'save/activity',
+        'ubah/activity', 
     ];
 }
